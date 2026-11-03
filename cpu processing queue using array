@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 50
+struct process{
+    char ID[50];
+    int time;
+};
+struct process p[MAX];
+int front=-1;
+int rear=-1;
+void enqueue(){
+    if(rear==MAX-1){
+        printf("cpu full\n");
+    }else{
+        rear++;
+        printf("enter process info:\n");
+        printf("enter ID:\n");
+        scanf("%s",p[rear].ID);
+        printf("enter time:\n");
+        scanf("%d",&p[rear].time);
+        if(front==-1){
+            front=0;
+        }
+        printf("insertion sucessful\n");
+    }}
+void dequeue(){
+    if(front>rear||front==-1){
+        printf("cpu empty:no process scheduled\n");
+    }
+    else{
+        printf("<<<process removed>>>\n");
+        printf("process ID: %s",p[front].ID);
+        printf("process time: %d\n",p[front].time);
+        front++;
+        if(front>rear){
+            front=-1;
+            rear=-1;}
+    }}
+void nxt(){
+    if(front==rear){
+        printf("no nxt process\n");
+    }
+    else{int n=front+1;
+        printf("next process is:\n");
+        printf("process ID: %s",p[n].ID);
+        printf("process time: %d\n",p[n].time);
+    } }
+void display(){
+     if(front>rear||front==-1){
+        printf("cpu empty:no process scheduled\n");
+    }
+    else{
+        printf("\n<<< waiting process >>>\n");
+        for(int i=front;i<=rear;i++){
+             printf("process ID: %s",p[i].ID);
+             printf("process time: %d\n",p[i].time);
+        }
+    }
+}
+void burst(){int sum=0;
+     if(front>rear||front==-1){
+        printf("burst time= %d\n",sum);
+     }
+    else{
+        for(int i=front;i<=rear;i++){
+            sum=sum+p[i].time;
+        }
+        printf("the burst time of pending process are: %d\n",sum);
+        }
+    }
+int main(){
+    int choice;
+    while(1){
+    printf("\n----menu----\n");
+    printf("1.add process\n2.remove process\n3.display next process\n4.display all waiting process\n5.burst time\n6.exit\n");
+    printf("enter your choice:\n");
+    scanf("%d",&choice);
+    switch(choice){
+        case 1:
+        enqueue();break;
+        case 2:
+        dequeue();break;
+        case 3:
+        nxt();break;
+        case 4:
+        display();break;
+        case 5:
+        burst();break;
+        case 6:
+        printf("exiting program\n");
+        exit(1);
+        default:
+        printf("invalid input\n");
+    }
+}}
