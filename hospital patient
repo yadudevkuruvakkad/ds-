@@ -1,0 +1,131 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+
+#define MAX 50
+
+int top = -1;
+
+struct patient
+{
+    char name[50];
+    char ID[50];
+};
+
+struct patient stack[MAX];
+
+void push()
+{
+    if(top == MAX - 1)
+    {
+        printf("Stack overflow\n");
+        printf("No more patients can be registered\n");
+    }
+    else
+    {
+        top++;
+
+        printf("Enter patient name: ");
+        scanf("%49s", stack[top].name);
+
+        printf("Enter patient ID: ");
+        scanf("%49s", stack[top].ID);
+
+        printf("Patient registered successfully\n");
+    }
+}
+
+void pop()
+{
+    if(top == -1)
+    {
+        printf("Stack underflow\n");
+        printf("No patients registered yet\n");
+    }
+    else
+    {
+        printf("Patient removed:\n");
+        printf("Name: %s\n", stack[top].name);
+        printf("ID: %s\n", stack[top].ID);
+
+        top--;
+    }
+}
+
+void peep()
+{
+    if(top == -1)
+    {
+        printf("No patients registered yet\n");
+    }
+    else
+    {
+        printf("Current patient:\n");
+        printf("Name: %s\n", stack[top].name);
+        printf("ID: %s\n", stack[top].ID);
+    }
+}
+
+void display()
+{
+    if(top == -1)
+    {
+        printf("No patients registered yet\n");
+    }
+    else
+    {
+        printf("Patient records:\n");
+
+        for(int i = top; i >= 0; i--)
+        {
+            printf("\nName: %s\n", stack[i].name);
+            printf("ID: %s\n", stack[i].ID);
+        }
+    }
+}
+
+int main()
+{
+    int choice;
+
+    while(1)
+    {
+        printf("\n--- PATIENT MANAGEMENT ---\n");
+        printf("1. Register new patient\n");
+        printf("2. Remove patient\n");
+        printf("3. Show current patient\n");
+        printf("4. Display patient information\n");
+        printf("5. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                push();
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                peep();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                printf("Exiting program\n");
+                exit(0);
+
+            default:
+                printf("Invalid input\n");
+        }
+    }
+
+    return 0;
+}
