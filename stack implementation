@@ -1,0 +1,115 @@
+#include <stdio.h>
+#define MAX 50
+
+int top = -1;
+int n = 1;
+int stack[MAX];
+
+void push()
+{
+    if(top == MAX - 1)
+    {
+        printf("Stack overflow! Can't visit more pages\n");
+    }
+    else
+    {
+        top++;
+        stack[top] = n;
+        printf("Visited page no: %d\n", n);
+        n++;
+    }
+}
+
+void pop()
+{
+    if(top == -1)
+    {
+        printf("Stack underflow! No pages to go back\n");
+    }
+    else
+    {
+        printf("Webpage removed: %d\n", stack[top]);
+        top--;
+
+        if(top == -1)
+            printf("No previous webpage available\n");
+        else
+            printf("Current webpage is: %d\n", stack[top]);
+    }
+}
+
+void peep()
+{
+    if(top == -1)
+    {
+        printf("No webpages visited\n");
+    }
+    else
+    {
+        printf("Current webpage is: %d\n", stack[top]);
+    }
+}
+
+void display()
+{
+    if(top == -1)
+    {
+        printf("Browsing history is empty\n");
+    }
+    else
+    {
+        printf("Your browsing history:\n");
+
+        for(int i = top; i >= 0; i--)
+        {
+            printf("Page %d\n", stack[i]);
+        }
+    }
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\n>>> MENU >>>\n");
+        printf("1. Visit a new webpage\n");
+        printf("2. Go back to previous page\n");
+        printf("3. Display current webpage\n");
+        printf("4. Display browsing history\n");
+        printf("5. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                push();
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                peep();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                printf("Exiting program\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+
+    } while(choice != 5);
+
+    return 0;
+}
