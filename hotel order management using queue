@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+struct order
+{
+    int id;
+    char food[50];
+};
+struct order queue[MAX];
+int front = -1, rear = -1;
+
+// ENQUEUE operation
+void enqueue()
+{
+    if(rear == MAX - 1)
+    {
+        printf("Queue Overflow! Cannot accept more orders\n");
+    }
+    else
+    {
+        struct order o;
+
+        printf("Enter order ID: ");
+        scanf("%d", &o.id);
+
+        printf("Enter food name: ");
+        scanf("%49s", o.food);
+
+        if(front == -1)
+            front = 0;
+
+        rear++;
+        queue[rear] = o;
+
+        printf("Order added successfully\n");
+    }
+}
+
+// DEQUEUE operation
+void dequeue()
+{
+    if(front == -1 || front > rear)
+    {
+        printf("Queue Underflow! No pending orders\n");
+    }
+    else
+    {
+        printf("Order completed:\n");
+        printf("Order ID: %d\n", queue[front].id);
+        printf("Food: %s\n", queue[front].food);
+
+        if(front == rear)
+        {
+            front = rear = -1;
+        }
+        else
+        {
+            front++;
+        }
+    }
+}
+
+// PEEK operation
+void peek()
+{
+    if(front == -1)
+    {
+        printf("No pending orders\n");
+    }
+    else
+    {
+        printf("Next order:\n");
+        printf("Order ID: %d\n", queue[front].id);
+        printf("Food: %s\n", queue[front].food);
+    }
+}
+
+// DISPLAY operation
+void display()
+{
+    if(front == -1)
+    {
+        printf("No pending orders\n");
+    }
+    else
+    {
+        printf("Pending orders:\n");
+
+        for(int i = front; i <= rear; i++)
+        {
+            printf("\nOrder ID: %d\n", queue[i].id);
+            printf("Food: %s\n", queue[i].food);
+        }
+    }
+}
+
+// Calculate total value of pending orders
+void total()
+{
+    int sum = 0;
+
+    if(front == -1)
+    {
+        printf("No pending orders\n");
+    }
+    else
+    {
+        for(int i = front; i <= rear; i++)
+        {
+            int amount;
+
+            printf("Enter amount for order %d: ", queue[i].id);
+            scanf("%d", &amount);
+
+            sum = sum + amount;
+        }
+
+        printf("Total value of pending orders: Rs.%d\n", sum);
+    }
+}
+
+int main()
+{
+    int choice;
+
+    while(1)
+    {
+        printf("\n--- RESTAURANT ORDER MANAGEMENT ---\n");
+        printf("1. Add new order\n");
+        printf("2. Complete first order\n");
+        printf("3. Display next order\n");
+        printf("4. Display all pending orders\n");
+        printf("5. Calculate total order value\n");
+        printf("6. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                enqueue();
+                break;
+
+            case 2:
+                dequeue();
+                break;
+
+            case 3:
+                peek();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                total();
+                break;
+
+            case 6:
+                printf("Exiting program\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+
+    return 0;
+}
