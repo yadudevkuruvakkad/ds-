@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 50
+int front = -1;
+int rear = -1;
+int cq[MAX];
+struct bank{
+    char name[50];
+    char acc[50];
+};
+struct bank p[50];
+void enqueue(){
+    if ((rear + 1) % MAX == front) {
+        printf("No more request can be accepted\n");
+    }
+    else {
+        printf("<<<Enter new customer details>>>\n");
+        if (front == -1 && rear == -1) {
+            front = 0;
+            rear = 0;
+        }
+        else {
+            rear = (rear + 1) % MAX;
+        }
+        printf("Enter name:\n");
+        scanf("%s", p[rear].name);
+        printf("Enter acc no:\n");
+        scanf("%s", p[rear].acc);
+    }
+}
+void dequeue() {
+    if (front == -1) {
+        printf("no request received yet");
+    }
+    else {
+        printf("The customer requests have been completed\n<<<removing customer>>>\n Name : %s\n",
+               p[front].name);
+        printf("acc no: %s\n",
+               p[front].acc);
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        }
+        else {
+            front = (front + 1) % MAX;
+        }
+    }
+}
+void display() {
+    if (front == -1) {
+        printf("no request have been received yet");
+    }
+    else {
+        printf("The pending customers are:\n");
+        for (int i = front; i <= rear; i++) {
+            printf("Name: %s\n", p[i].name);
+            printf("acc no: %s\n", p[i].acc);
+        }
+    }
+}
+void peep() {
+    if (front == -1) {
+        printf("No requests received yet\n");
+    }
+    else {
+        printf("Next customer is:\n");
+        printf("name : %s\n", p[front].name);
+        printf("acc no : %s\n", p[front].acc);
+    }
+}
+int main() {
+    int choice;
+    while (1) {
+        printf("\n--- MENU ---\n");
+        printf("1. Add customer\n");
+        printf("2. complete customer request\n");
+        printf("3. Display all remaining customers\n");
+        printf("4. display the next xustomer\n");
+        printf("5. Exit\n");
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                enqueue();
+                break;
+
+            case 2:
+                dequeue();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                peep();
+                break;
+
+            case 5:
+                printf("Exiting program...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice");
+        }
+    }
+}
