@@ -1,0 +1,306 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 10
+
+struct baggage {
+    char ID[20];
+    char name[50];
+    char flight[20];
+    float weight;
+};
+
+struct baggage b[MAX];
+
+int front = -1;
+int rear = -1;
+
+int isFull() {
+    return (front == 0 && rear == MAX - 1) ||
+           (front == rear + 1);
+}
+
+int isEmpty() {
+    return front == -1;
+}
+
+// Insert at front
+void insertFront() {
+    if (isFull()) {
+        printf("Deque is full\n");
+        return;
+    }
+
+    if (front == -1) {
+        front = rear = 0;
+    }
+    else if (front == 0) {
+        front = MAX - 1;
+    }
+    else {
+        front--;
+    }
+
+    printf("Enter baggage ID: ");
+    scanf("%19s", b[front].ID);
+
+    printf("Enter passenger name: ");
+    scanf("%49s", b[front].name);
+
+    printf("Enter flight number: ");
+    scanf("%19s", b[front].flight);
+
+    printf("Enter baggage weight: ");
+    scanf("%f", &b[front].weight);
+
+    printf("Priority baggage inserted successfully\n");
+}
+
+// Insert at rear
+void insertRear() {
+    if (isFull()) {
+        printf("Deque is full\n");
+        return;
+    }
+
+    if (front == -1) {
+        front = rear = 0;
+    }
+    else if (rear == MAX - 1) {
+        rear = 0;
+    }
+    else {
+        rear++;
+    }
+
+    printf("Enter baggage ID: ");
+    scanf("%19s", b[rear].ID);
+
+    printf("Enter passenger name: ");
+    scanf("%49s", b[rear].name);
+
+    printf("Enter flight number: ");
+    scanf("%19s", b[rear].flight);
+
+    printf("Enter baggage weight: ");
+    scanf("%f", &b[rear].weight);
+
+    printf("Normal baggage inserted successfully\n");
+}
+
+// Delete from front
+void deleteFront() {
+    if (isEmpty()) {
+        printf("Deque is empty\n");
+        return;
+    }
+
+    printf("Scanned baggage:\n");
+    printf("ID: %s\n", b[front].ID);
+    printf("Passenger: %s\n", b[front].name);
+
+    if (front == rear) {
+        front = rear = -1;
+    }
+    else if (front == MAX - 1) {
+        front = 0;
+    }
+    else {
+        front++;
+    }
+}
+
+// Delete from rear
+void deleteRear() {
+    if (isEmpty()) {
+        printf("Deque is empty\n");
+        return;
+    }
+
+    printf("Cancelled baggage:\n");
+    printf("ID: %s\n", b[rear].ID);
+    printf("Passenger: %s\n", b[rear].name);
+
+    if (front == rear) {
+        front = rear = -1;
+    }
+    else if (rear == 0) {
+        rear = MAX - 1;
+    }
+    else {
+        rear--;
+    }
+}
+
+// Search baggage
+void search() {
+    char id[20];
+    int i;
+
+    if (isEmpty()) {
+        printf("Deque is empty\n");
+        return;
+    }
+
+    printf("Enter baggage ID to search: ");
+    scanf("%19s", id);
+
+    i = front;
+
+    while (1) {
+        if (strcmp(b[i].ID, id) == 0) {
+            printf("Baggage found!\n");
+            printf("ID: %s\n", b[i].ID);
+            printf("Passenger: %s\n", b[i].name);
+            printf("Flight: %s\n", b[i].flight);
+            printf("Weight: %.2f kg\n", b[i].weight);
+            return;
+        }
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % MAX;
+    }
+
+    printf("Baggage not found\n");
+}
+
+// Display all baggage
+void display() {
+    int i;
+
+    if (isEmpty()) {
+        printf("Deque is empty\n");
+        return;
+    }
+
+    printf("\nPending baggage details:\n");
+
+    i = front;
+
+    while (1) {
+        printf("\nID: %s\n", b[i].ID);
+        printf("Passenger: %s\n", b[i].name);
+        printf("Flight: %s\n", b[i].flight);
+        printf("Weight: %.2f kg\n", b[i].weight);
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % MAX;
+    }
+}
+
+// Count baggage
+void count() {
+    int c = 0;
+    int i;
+
+    if (isEmpty()) {
+        printf("No baggage available\n");
+        return;
+    }
+
+    i = front;
+
+    while (1) {
+        c++;
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % MAX;
+    }
+
+    printf("Total baggage items: %d\n", c);
+}
+
+// Calculate total weight
+void totalWeight() {
+    float sum = 0;
+    int i;
+
+    if (isEmpty()) {
+        printf("No baggage available\n");
+        return;
+    }
+
+    i = front;
+
+    while (1) {
+        sum += b[i].weight;
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % MAX;
+    }
+
+    printf("Total baggage weight: %.2f kg\n", sum);
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n--- AIRPORT BAGGAGE MANAGEMENT ---\n");
+        printf("1. Insert priority baggage at front\n");
+        printf("2. Insert normal baggage at rear\n");
+        printf("3. Scan baggage from front\n");
+        printf("4. Cancel baggage from rear\n");
+        printf("5. Display all baggage\n");
+        printf("6. Search baggage\n");
+        printf("7. Count baggage\n");
+        printf("8. Calculate total weight\n");
+        printf("9. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                insertFront();
+                break;
+
+            case 2:
+                insertRear();
+                break;
+
+            case 3:
+                deleteFront();
+                break;
+
+            case 4:
+                deleteRear();
+                break;
+
+            case 5:
+                display();
+                break;
+
+            case 6:
+                search();
+                break;
+
+            case 7:
+                count();
+                break;
+
+            case 8:
+                totalWeight();
+                break;
+
+            case 9:
+                printf("Exiting program...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+
+    return 0;
+}
