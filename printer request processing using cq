@@ -1,0 +1,126 @@
+include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 50
+
+int front = -1;
+int rear = -1;
+
+int cq[MAX];
+
+struct print {
+    char name[50];
+    int page;
+};
+
+struct print p[50];
+
+void enqueue() {
+    if ((rear + 1) % MAX == front) {
+        printf("No more request can be accepted\n");
+    }
+    else {
+        printf("<<<Enter new request>>>\n");
+
+        if (front == -1 && rear == -1) {
+            front = 0;
+            rear = 0;
+        }
+        else {
+            rear = (rear + 1) % MAX;
+        }
+
+        printf("Enter DOC name:\n");
+        scanf("%s", p[rear].name);
+
+        printf("Enter no of pages in DOC:\n");
+        scanf("%d", &p[rear].page);
+    }
+}
+
+void dequeue() {
+    if (front == -1) {
+        printf("The printer is empty");
+    }
+    else {
+        printf("The process is removed\n Name of DOC: %s\n",
+               p[front].name);
+
+        printf("No of pages in DOC: %d\n",
+               p[front].page);
+
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        }
+        else {
+            front = (front + 1) % MAX;
+        }
+    }
+}
+
+void display() {
+    if (front == -1) {
+        printf("The printer is empty");
+    }
+    else {
+        printf("The pending requests are:\n");
+
+        for (int i = front; i <= rear; i++) {
+            printf("Name: %s\n", p[i].name);
+            printf("No of pages: %d\n", p[i].page);
+        }
+    }
+}
+
+void peep() {
+    if (front == -1) {
+        printf("No pending requests\n");
+    }
+    else {
+        printf("Next request is:\n");
+        printf("%s\n", p[front].name);
+        printf("With pages: %d\n", p[front].page);
+    }
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n--- MENU ---\n");
+        printf("1. Add request\n");
+        printf("2. Remove request\n");
+        printf("3. Display\n");
+        printf("4. Peep Display next request\n");
+        printf("5. Exit\n");
+
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                enqueue();
+                break;
+
+            case 2:
+                dequeue();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                peep();
+                break;
+
+            case 5:
+                printf("Exiting program...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice");
+        }
+    }
+}
