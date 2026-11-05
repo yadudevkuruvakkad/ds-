@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+struct poly{
+    int coeff;
+    int exp;
+};
+struct poly p[50],q[50],r[100];
+int n1,n2,k=0,i,j;
+void read(){
+    printf("enter no of terms in polynomial 1:\n");
+    scanf("%d",&n1);
+    printf("enter no of terms in polynomial 2:\n");
+    scanf("%d",&n2);
+    
+    printf("enter terms of p1(coeff and exp) in decending order:\n");
+    for(int i=0;i<n1;i++){
+    scanf("%d %d",&p[i].coeff,&p[i].exp);    
+    }
+    printf("enter terms of p2(coeff and exp) in decending order:\n");
+    for(int j=0;j<n2;j++){
+        scanf("%d %d",&q[j].coeff,&q[j].exp);
+    }}
+void add(){
+    while(i<n1&&j<n2){
+        if(p[i].exp>q[j].exp){
+            r[k]=p[i];
+            k++;
+            i++;}
+        else if(p[i].exp<q[j].exp){
+            r[k]=q[j];
+            k++;
+            j++;
+        }
+        else{
+            r[k].coeff=p[i].coeff+q[j].coeff;
+            r[k].exp=p[i].exp;
+            k++;
+            i++;
+            j++;}}
+    while(i<n1){
+        r[k]=p[i];
+        k++;
+        i++;}
+    while(j<n2){
+        r[k]=q[j];
+        k++;
+        j++;}}
+void display(){
+    printf("the resultant polynomial is:\n");
+    for(int i=0;i<k;i++){
+        printf("%dx^%d",r[i].coeff,r[i].exp);
+        if(i!=k-1){
+            printf("+");
+        }}}
+int main(){
+    read();
+    add();
+    display();       
+    }
