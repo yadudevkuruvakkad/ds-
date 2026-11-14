@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+struct node *front;
+struct node *rear;
+struct node *top=0;
+
+void enqueue(int x){
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=0;
+    if(front==0&&rear==0){
+        front=rear=newnode;
+    }
+    else{
+        rear->next=newnode;
+        rear=newnode;
+    }
+}
+
+void dequeue(){
+    struct node *temp;
+    if(front==0&&rear==0){
+        printf("queue is empty\n");
+    }
+    else{
+        temp=front;
+        front=front->next;
+        if(front==0){
+            rear=0;
+        }
+        free(temp);
+    }
+}
+
+
+void display(){
+    struct node *temp;
+    if(front==0&&rear==0){
+        printf("queue is empty\n");
+    }
+    else{
+        temp=front;
+        while(temp!=0){
+            printf("%d->",temp->data);
+            temp=temp->next;}
+        }printf("null");
+    }
+void queue_peek(){
+    if(front==0&&rear==0){
+        printf("empty queue\n");
+    }
+    else{
+        printf("top= %d",front->data);
+    }}
+
+void push(int x){
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=top;
+    top=newnode;
+}
+void pop(){
+    struct node *temp;
+    temp=top;
+    if(top==0&&rear==0){
+        printf("empty stack\n");
+    }
+    else{
+        top=top->next;
+        free(temp);}}
+
+void stack_display(){
+    struct node *temp;
+    temp=top;
+    if(top==0&&rear==0){
+        printf("empty stack\n");
+    }
+    else{
+        printf("<<<<stack is>>>>\n");
+        while(temp!=0){
+            printf("%d\n",temp->data);
+            temp=temp->next;}}}
+void peek(){
+    if(top==0&&rear==0){
+        printf("empty stack\n");
+    }
+    else{
+        printf("top=%d\n",top->data);}}
+int main(){
+    int choice;
+    do{
+        printf("\n<<<operations>>>\n");
+        printf("1.stack push\n2.stack pop\n3.stack display\n4.stack peek\n5.queue enqueue\n6.queue dequeue\n7.display\n8.queue peek\n9.exit\nenter your choice:\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+                int num;
+                printf("enter num to insert:\n");scanf("%d",&num);
+            push(num);break;
+            case 2:
+            pop();break;
+            case 3:
+            stack_display();break;
+            case 4:
+            peek();break;
+            case 5:
+                 int n;
+                printf("enter num to insert:\n");scanf("%d",&n);
+            enqueue(n);break;
+            case 6:
+            dequeue();break;
+            case 7:
+            display();break;
+            case 8:
+            queue_peek();break;
+            case 9:
+            printf("exiting program....\n");
+            break;
+            default:
+                printf("invalid choice\n");
+        }}while(choice!=9);
+}
+        
+        
