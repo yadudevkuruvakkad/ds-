@@ -1,0 +1,216 @@
+
+
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+struct node *head=0,*tail=0;
+int count=0;
+void insertbeg(){
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter element to insert:\n");
+    scanf("%d",&newnode->data);
+    newnode->next=0;
+    newnode->prev=0;
+    if(head==0){
+        head=tail=newnode;
+        newnode->prev=0;}
+    else{
+        newnode->next=head;
+        head->prev=newnode;
+        head=newnode;}
+    count++;
+}
+void insertend(){
+    if(tail==0){
+        insertbeg();
+    }
+    else{
+        struct node *newnode,*temp;
+        newnode=(struct node*)malloc(sizeof(struct node));
+        printf("enter element to insert:\n");
+        scanf("%d",&newnode->data);
+        newnode->next=0;
+        newnode->prev=0;
+        tail->next=newnode;
+        newnode->prev=tail;
+        tail=newnode;
+    }count++;
+}
+void insertpos(){
+    int pos;
+    printf("enter position to insert:\n");
+    scanf("%d",&pos);
+    if(pos>count){
+        printf("invalid\n");
+    }
+    else if(pos==1){
+        insertbeg();
+    }
+    else{ 
+        struct node *newnode,*temp;
+        newnode=(struct node*)malloc(sizeof(struct node));
+        printf("enter element to insert:\n");
+        scanf("%d",&newnode->data);
+        int i=1;
+        temp=head;
+         while(i<pos-1){
+             temp=temp->next;
+             i++;}
+        newnode->next=temp->next;
+        newnode->prev=temp;
+        temp->next=newnode;
+        count++;}}
+
+void insertafterpos(){
+    int pos;
+    printf("enter position to insert:\n");
+    scanf("%d",&pos);
+    if(pos>count){
+        printf("invalid\n");
+    }
+    else{
+        struct node *newnode,*temp;
+        newnode=(struct node*)malloc(sizeof(struct node));
+        printf("enter element to insert:\n");
+        scanf("%d",&newnode->data);
+        int i=1;
+        temp=head;
+        while(i<pos){
+             temp=temp->next;
+             i++;}
+        newnode->next=temp->next;
+        newnode->prev=temp;
+        temp->next=newnode;
+        count++;}}
+void deletebeg(){
+    struct node *temp;
+    if(head==0){
+        printf("empty\n");
+    }
+   else if(count==1){
+       head=0;
+       tail=0;
+   }
+    else{
+        temp=head;
+        head=head->next;
+        head->prev=0;
+        free(temp);
+        count--;
+    }
+}
+void deleteend(){
+    struct node *temp;
+    if(tail==0){
+        printf("empty\n");
+    }
+    else if(count==1){
+       head=0;
+       tail=0;
+    free(temp);
+    count--;}
+    else{
+        temp=tail;
+        tail=tail->prev;
+        temp->prev->next=0;
+        free(temp);
+    count--;
+}}
+
+void deletepos(){
+    int pos;
+    struct node *temp;
+    printf("enter position to delete:\n");
+    scanf("%d",&pos);
+    if(pos<1||pos>count){
+        printf("invalid\n");
+    }
+    else if(head==0)
+    {
+        printf("empty\n");
+    }
+    else if(count==1){
+        head=tail=0;
+        free(temp);
+    }
+    else if(pos==1){
+        deletebeg();
+    }
+    else{
+        int i=1;
+        temp=head;
+        while(i<pos){
+            temp=temp->next;
+            i++;}
+        temp->next->prev=temp->prev;
+        temp->prev->next=temp->next;
+        free(temp);
+        count--;
+        }
+    }
+void reverse(){
+    struct node *current,*nextnode;
+    if(head==0){
+        printf("empty stack\n");
+    }
+    else{
+        current=head;
+        while(current!=0){
+            nextnode=current->next;
+            current->next=current->prev;
+            current->prev=nextnode;
+        current=nextnode;}
+        current=head;
+        head=tail;
+        tail=current;
+    }}
+void display(){
+    struct node *temp;
+    if(head==0){
+        printf("empty\n");
+    }
+    else{temp=head;
+        while(temp!=0){
+            printf("%d\t",temp->data);
+            temp=temp->next;
+        }
+    }
+}
+
+int main(){
+    int choice;
+    do{
+        printf("\n\n<<<MENU>>>\n");
+        printf("1.insert front\n2.insert end\n3.insert at position\n4.insert after position\n5.delete front\n6.delete end\n7.delete between\n8.reverse\n9.display\n10.exit\n");
+        printf("enter your choice:\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+            insertbeg();break;
+            case 2:
+            insertend();break;
+            case 3:
+            insertpos();break;
+            case 4:
+            insertafterpos();break;
+            case 5:
+            deletebeg();break;
+            case 6:
+            deleteend();break;
+            case 7:
+            deletepos();break;
+            case 8:
+            reverse();break;
+            case 9:
+            display();break;
+            case 10:
+            printf("exiting program........\n");
+            break;
+            default:
+            printf("invalid\n");
+        }}whi
