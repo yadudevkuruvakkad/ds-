@@ -1,0 +1,30 @@
+#include <stdio.h>
+struct patient{
+    char ID[50];
+    int time;
+};
+int main(){
+    int j;
+    int n;
+    printf("enter total number of patients:\n");
+    scanf("%d",&n);
+    int a[n];
+    struct patient p[n];
+    for(int i=0;i<n;i++){printf("patient %d\n",i+1);
+        printf(" enter patient ID:\n");scanf("%s",p[i].ID);
+        printf(" enter waiting time(in minutes):\n");scanf("%d",&p[i].time);
+        a[i]=p[i].time;
+    }
+    struct patient temp;
+    for(int i=1;i<n;i++){
+        temp=p[i];
+        j=i-1;
+    while(j>=0&&p[j].time>temp.time){
+        p[j+1]=p[j];
+        j--;}
+        p[j+1]=temp;}
+    printf("\nlist of patients in order of waiting time:\n");
+    for(int i=0;i<n;i++){
+        printf("patient id: %s\n",p[i].ID);
+        printf("waiting time: %d\n",p[i].time);}}
+    
